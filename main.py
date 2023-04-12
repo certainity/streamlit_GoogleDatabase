@@ -15,6 +15,9 @@ import matplotlib.pyplot as plt
 
 from datetime import datetime
 
+import plotly.express as px  # interactive charts
+
+
 # Disable certificate verification (Not necessary always)
 import ssl
 ssl._create_default_https_context = ssl._create_unverified_context
@@ -86,14 +89,32 @@ name = comp_dict['iupac_name']
 st.markdown(name)
 plot = st.checkbox('Canonical Smiles Plot')
 
-if plot:
-    sm = comp_dict['canonical_smiles']
-    mol = read_smiles(comp_dict['canonical_smiles']) 
-    elements = nx.get_node_attributes(mol, name = "element")
-    nx.draw(mol, with_labels=True, labels = elements, pos=nx.spring_layout(mol))
-    fig , ax = plt.subplots()
-    nx.draw(mol, with_labels=True, labels = elements, pos = nx.spring_layout(mol))
-    st.pyplot(fig)
+# fig = px.bar(x=df['SN'], y=df['LOCATION'])
+# fig.show()
+
+# create two columns for charts
+# fig_col1, fig_col2 = st.columns(2)
+
+# with fig_col1:
+#     st.markdown("### First Chart")
+#     fig = px.density_heatmap(
+#         data_frame=df, y="LOCATION", x="SN"
+#     )
+#     st.write(fig)
+   
+# with fig_col2:
+st.markdown("### Location Check")
+fig2 = px.bar(x=df['SN'], y=df['LOCATION'])
+st.write(fig2)
+
+# if plot:
+#     sm = comp_dict['canonical_smiles']
+#     mol = read_smiles(comp_dict['canonical_smiles']) 
+#     elements = nx.get_node_attributes(mol, name = "element")
+#     nx.draw(mol, with_labels=True, labels = elements, pos=nx.spring_layout(mol))
+#     fig , ax = plt.subplots()
+#     nx.draw(mol, with_labels=True, labels = elements, pos = nx.spring_layout(mol))
+#     st.pyplot(fig)
 
 add = st.sidebar.checkbox('Add CID')
 if add :  
