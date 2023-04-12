@@ -62,7 +62,7 @@ def update_the_spreadsheet(spreadsheetname,dataframe):
     st.sidebar.info('Updated to GoogleSheet')
 
 
-st.header('Streamlit Chemical Inventory')
+st.header('Performance Report')
 
 # Check whether the sheets exists
 what_sheets = worksheet_names()
