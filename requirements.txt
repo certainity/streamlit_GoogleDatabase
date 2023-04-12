@@ -1,1 +1,4 @@
-
+gspread_pandas
+pubchempy
+pysmiles
+matplotlib
