@@ -107,15 +107,6 @@ st.markdown("### Location Check")
 fig2 = px.bar(x=df['SN'], y=df['LOCATION'])
 st.write(fig2)
 
-# overwrite tick labels    
-fig2.update_layout(
-    xaxis = {
-     'tickmode': 'array',
-     'tickvals': list(range(df['SN'])),
-     'ticktext': df['SN'].tolist(),
-    }
-)
-
 # if plot:
 #     sm = comp_dict['canonical_smiles']
 #     mol = read_smiles(comp_dict['canonical_smiles']) 
