@@ -114,7 +114,7 @@ fig2=plt.bar(Names,Marks,color = 'blue')
 plt.title('Result')    
 plt.xlabel('Names')    
 plt.ylabel('Marks')
-st.write(fig2)
+st.pyplot(fig2)
 
 
 # if plot:
