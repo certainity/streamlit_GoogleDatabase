@@ -30,7 +30,7 @@ spreadsheetname = "Database"
 spread = Spread(spreadsheetname,client = client)
 
 # Check the connection
-st.write(spread.url)
+# st.write(spread.url)
 
 sh = client.open(spreadsheetname)
 worksheet_list = sh.worksheets()
