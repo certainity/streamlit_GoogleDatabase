@@ -12,6 +12,7 @@ from pysmiles import read_smiles
 # 
 import networkx as nx
 import matplotlib.pyplot as plt
+import numpy as np   
 
 from datetime import datetime
 
@@ -62,7 +63,7 @@ def update_the_spreadsheet(spreadsheetname,dataframe):
     st.sidebar.info('Updated to GoogleSheet')
 
 
-st.header('Streamlit Chemical Inventory')
+st.header('Performance Report')
 
 # Check whether the sheets exists
 what_sheets = worksheet_names()
@@ -108,14 +109,14 @@ fig1 = px.bar(x=df['SN'], y=df['LOCATION'])
 st.write(fig1)
 
 # fig2:
-Names = ['Arun','James','Ricky','Patrick']    
-Marks = [51,87,45,67]    
-fig2=plt.bar(Names,Marks,color = 'blue')    
-plt.title('Result')    
-plt.xlabel('Names')    
-plt.ylabel('Marks')
-st.pyplot(fig2)
-
+# Names = ['Arun','James','Ricky','Patrick']    
+# Marks = [51,87,45,67]    
+# fig2=plt.bar(x=Names,y=Marks,color = 'blue',align='edge', height=100)    
+# plt.title('Result')    
+# plt.xlabel('Names')    
+# plt.ylabel('Marks')
+# fig2 , ax = plt.subplots()
+# st.pyplot(fig2)
 
 # if plot:
 #     sm = comp_dict['canonical_smiles']
