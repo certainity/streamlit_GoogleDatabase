@@ -72,22 +72,22 @@ ws_choice = st.sidebar.radio('Available worksheets',what_sheets)
 # Load data from worksheets
 df = load_the_spreadsheet(ws_choice)
 # Show the availibility as selection
-# select_CID = st.sidebar.selectbox('Location',list(df['Compound CID']))
+# select_CID = st.sidebar.selectbox('CID',list(df['Compound CID']))
 # values_list = worksheet.col_values(1)
-select_CID = st.sidebar.selectbox('CID',list(df['SN']))
+# select_CID = st.sidebar.selectbox('CID',list(df['SN']))
 
 # Now we can use the pubchempy module to dump information
-comp = pcp.Compound.from_cid(select_CID)
-comp_dict = comp.to_dict() # Converting to a dictinoary
+# comp = pcp.Compound.from_cid(select_CID)
+# comp_dict = comp.to_dict() # Converting to a dictinoary
 # What Information look for ?
-options = ['molecular_weight' ,'molecular_formula',
-           'charge','atoms','elements','bonds']
-show_me = st.radio('What you want to see?',options)
+# options = ['molecular_weight' ,'molecular_formula',
+#            'charge','atoms','elements','bonds']
+# show_me = st.radio('What you want to see?',options)
 
-st.info(comp_dict[show_me])
-name = comp_dict['iupac_name']
-st.markdown(name)
-plot = st.checkbox('Canonical Smiles Plot')
+# st.info(comp_dict[show_me])
+# name = comp_dict['iupac_name']
+# st.markdown(name)
+# plot = st.checkbox('Canonical Smiles Plot')
 
 # fig = px.bar(x=df['SN'], y=df['LOCATION'])
 # fig.show()
@@ -106,6 +106,15 @@ plot = st.checkbox('Canonical Smiles Plot')
 st.markdown("### Location Check")
 fig2 = px.bar(x=df['SN'], y=df['LOCATION'])
 st.write(fig2)
+
+# overwrite tick labels    
+fig2.update_layout(
+    xaxis = {
+     'tickmode': 'array',
+     'tickvals': list(range(df['SN'])),
+     'ticktext': df['SN'].tolist(),
+    }
+)
 
 # if plot:
 #     sm = comp_dict['canonical_smiles']
