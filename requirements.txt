@@ -2,3 +2,4 @@ gspread_pandas
 pubchempy
 pysmiles
 matplotlib
+plotly_express
