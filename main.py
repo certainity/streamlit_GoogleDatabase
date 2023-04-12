@@ -62,7 +62,7 @@ def update_the_spreadsheet(spreadsheetname,dataframe):
     st.sidebar.info('Updated to GoogleSheet')
 
 
-st.header('Performance Report')
+st.header('Streamlit Chemical Inventory')
 
 # Check whether the sheets exists
 what_sheets = worksheet_names()
@@ -102,10 +102,20 @@ df = load_the_spreadsheet(ws_choice)
 #     )
 #     st.write(fig)
    
-# with fig_col2:
+# fig1:
 st.markdown("### Location Check")
-fig2 = px.bar(x=df['SN'], y=df['LOCATION'])
+fig1 = px.bar(x=df['SN'], y=df['LOCATION'])
+st.write(fig1)
+
+# fig2:
+Names = ['Arun','James','Ricky','Patrick']    
+Marks = [51,87,45,67]    
+fig2=plt.bar(Names,Marks,color = 'blue')    
+plt.title('Result')    
+plt.xlabel('Names')    
+plt.ylabel('Marks')
 st.write(fig2)
+
 
 # if plot:
 #     sm = comp_dict['canonical_smiles']
