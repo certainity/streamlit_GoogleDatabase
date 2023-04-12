@@ -3,3 +3,4 @@ pubchempy
 pysmiles
 matplotlib
 plotly_express
+numpy
