@@ -72,7 +72,7 @@ ws_choice = st.sidebar.radio('Available worksheets',what_sheets)
 # Load data from worksheets
 df = load_the_spreadsheet(ws_choice)
 # Show the availibility as selection
-# select_CID = st.sidebar.selectbox('CID',list(df['Compound CID']))
+# select_CID = st.sidebar.selectbox('Location',list(df['Compound CID']))
 # values_list = worksheet.col_values(1)
 select_CID = st.sidebar.selectbox('CID',list(df['SN']))
 
