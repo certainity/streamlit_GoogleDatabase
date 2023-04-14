@@ -102,30 +102,20 @@ df = load_the_spreadsheet(ws_choice)
 #         data_frame=df, y="LOCATION", x="SN"
 #     )
 #     st.write(fig)
-   
-# fig1:
+
+# bar_chart:
 st.markdown("### Location Check")
-fig1 = px.bar(x=df['SN'], y=df['LOCATION'])
-st.write(fig1)
+bar_chart = px.bar(df,
+                   x='SN',
+                   y=df['LOCATION'],
+                   text=df['LOCATION'],
+                   color_discrete_sequence = ['#F63366']*len(df),
+                   template= 'plotly_white')
+st.plotly_chart(bar_chart)
+#'ggplot2', 'seaborn', 'simple_white', 'plotly', 
+# 'plotly_white', 'plotly_dark', 'presentation', 'xgridoff','ygridoff', 'gridon', 'none
+   
 
-# fig2:
-# Names = ['Arun','James','Ricky','Patrick']    
-# Marks = [51,87,45,67]    
-# fig2=plt.bar(x=Names,y=Marks,color = 'blue',align='edge', height=100)    
-# plt.title('Result')    
-# plt.xlabel('Names')    
-# plt.ylabel('Marks')
-# fig2 , ax = plt.subplots()
-# st.pyplot(fig2)
-
-# if plot:
-#     sm = comp_dict['canonical_smiles']
-#     mol = read_smiles(comp_dict['canonical_smiles']) 
-#     elements = nx.get_node_attributes(mol, name = "element")
-#     nx.draw(mol, with_labels=True, labels = elements, pos=nx.spring_layout(mol))
-#     fig , ax = plt.subplots()
-#     nx.draw(mol, with_labels=True, labels = elements, pos = nx.spring_layout(mol))
-#     st.pyplot(fig)
 
 add = st.sidebar.checkbox('Add CID')
 if add :  
