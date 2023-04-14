@@ -2,6 +2,7 @@
 ## Modules
 import streamlit as st 
 from pandas import DataFrame
+import datetime as dt
 
 from gspread_pandas import Spread,Client
 from google.oauth2 import service_account
@@ -69,9 +70,62 @@ st.header('Performance Report')
 what_sheets = worksheet_names()
 #st.sidebar.write(what_sheets)
 ws_choice = st.sidebar.radio('Available worksheets',what_sheets)
-
 # Load data from worksheets
 df = load_the_spreadsheet(ws_choice)
+
+
+
+
+
+
+# --- STREAMLIT SELECTION
+sn = df['SN'].unique().tolist()
+# ages = df['LOCATION'].unique().tolist()
+
+# age_selection = st.slider('Age:',
+#                         min_value= min(ages),
+#                         max_value= max(ages),
+#                         value=(min(ages),max(ages)))
+# --- STREAMLIT date picker
+min_date = dt.datetime(2023,1,1)
+max_date = dt.date(2024,1,1)
+
+a_date = st.date_input("Pick a date", (min_date, max_date))
+
+##this uses streamlit 'magic'!!!!
+"The date selected:", a_date
+# "The type", type(a_date)
+"Singling out a date for dataframe filtering", a_date[0],a_date[-1]
+
+st.dataframe(df)
+
+stime = a_date[0]
+time1 = stime.strftime("%Y-%m-%d")
+etime= a_date[-1]
+time2 = etime.strftime("%Y-%m-%d")
+df2 = df.loc[(df['Time_stamp'] >= time1) & (df['Time_stamp'] < time2)]
+
+# df2 = df[(df['Time_stamp'] > "2023-04-12") & (df['Time_stamp']< "2023-04-13")]
+print(df2)
+st.dataframe(df2)
+
+
+department_selection = st.multiselect('SN:',
+                                    sn,
+                                    default=sn)
+
+# --- FILTER DATAFRAME BASED ON SELECTION
+mask = (df['SN'].isin(department_selection))
+number_of_result = df[mask].shape[0]
+st.markdown(f'*Available Results: {number_of_result}*')
+
+# --- GROUP DATAFRAME AFTER SELECTION
+df_grouped = df[mask].groupby(by=['SN']).count()[['LOCATION']]
+# df_grouped = df_grouped.rename(columns={'LOCATION': 'Time_stamp'})
+df_grouped = df_grouped.reset_index()
+
+
+
 # Show the availibility as selection
 # select_CID = st.sidebar.selectbox('CID',list(df['Compound CID']))
 # values_list = worksheet.col_values(1)
@@ -104,13 +158,15 @@ df = load_the_spreadsheet(ws_choice)
 #     st.write(fig)
 
 # bar_chart:
-st.markdown("### Location Check")
-bar_chart = px.bar(df,
+# st.markdown("### Location Check")
+bar_chart = px.bar(df2,
                    x='SN',
-                   y=df['LOCATION'],
-                   text=df['LOCATION'],
-                   color_discrete_sequence = ['#F63366']*len(df),
-                   template= 'plotly_white')
+                   y='LOCATION',
+                   text='LOCATION',
+                   color_discrete_sequence = ['#F63366']*len(df2),
+                   template= 'presentation',
+                   title="Location Check",
+                  )
 st.plotly_chart(bar_chart)
 #'ggplot2', 'seaborn', 'simple_white', 'plotly', 
 # 'plotly_white', 'plotly_dark', 'presentation', 'xgridoff','ygridoff', 'gridon', 'none
