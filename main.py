@@ -18,6 +18,8 @@ import numpy as np
 from datetime import datetime
 
 import plotly.express as px  # interactive charts
+import plotly.graph_objects as go
+
 
 
 # Disable certificate verification (Not necessary always)
@@ -83,27 +85,69 @@ sn = df['SN'].unique().tolist()
 #                         max_value= max(ages),
 #                         value=(min(ages),max(ages)))
 # --- STREAMLIT date picker
-min_date = dt.datetime(2023,1,1)
-max_date = dt.date(2024,1,1)
+# min_date = dt.datetime(2023,1,1)
+# max_date = dt.date(2024,1,1)
 
-a_date = st.date_input("Pick a date", (min_date, max_date))
+# a_date = st.date_input("Pick a date", (min_date, max_date))
 
 ##this uses streamlit 'magic'!!!!
 # "The date selected:", a_date
 # "The type", type(a_date)
 # "Singling out a date for dataframe filtering", a_date[0],a_date[-1]
 
+# min_date = dt.datetime(2020,1,1)
+# max_date = dt.date(2024,1,1)
+
+# a_date = st.date_input("Pick a date", min_value=min_date, max_value=max_date)
+
+# mn_date = dt.datetime(2020,1,1)
+# mx_date = dt.date(2024,1,1)
+# b_date = st.date_input("End date", min_value=mn_date, max_value=mx_date)
+
+# ##this uses streamlit 'magic'!!!! 
+# "The date selected:", a_date,b_date
+
+today = dt.date.today()
+tomorrow = today + dt.timedelta(days=1)
+start_date = st.date_input('Start date', today)
+end_date = st.date_input('End date', tomorrow)
+
 st.dataframe(df)
 
-stime = a_date[0]
-time1 = stime.strftime("%Y-%m-%d")
-etime= a_date[-1]
-time2 = etime.strftime("%Y-%m-%d")
-df2 = df.loc[(df['Time_stamp'] >= time1) & (df['Time_stamp'] < time2)]
+stime = start_date
+time1 = stime.strftime("%Y-%m-%d %H:%M:%S")
+etime= end_date
+time2 = etime.strftime("%Y-%m-%d 23:59:59")
+df2 = df.query('Time_stamp >= @time1 and Time_stamp <= @time2')
+
+# df2 = df.loc[(df['Time_stamp'] >= time1) & (df['Time_stamp'] < time2)]
 
 # df2 = df[(df['Time_stamp'] > "2023-04-12") & (df['Time_stamp']< "2023-04-13")]
-print(df2)
+# print(df2)
 st.dataframe(df2)
+
+if time1 < time2:
+    # st.success('Start date: `%s`\n\nEnd date:`%s`' % (start_date, end_date))
+        
+# bar_chart:
+# st.markdown("### Location Check")
+    bar_chart = px.bar(df2,
+                   x='SN',
+                   y='LOCATION',
+                   text='LOCATION',
+                   color_discrete_sequence = ['#F63366']*len(df2),
+                   template= 'plotly',
+                   title="Location Check",
+                  )
+    bar_chart.layout.xaxis.fixedrange = True
+    bar_chart.layout.yaxis.fixedrange = True
+    st.plotly_chart(bar_chart,theme='streamlit',)
+
+
+#'ggplot2', 'seaborn', 'simple_white', 'plotly', 
+# 'plotly_white', 'plotly_dark', 'presentation', 'xgridoff','ygridoff', 'gridon', 'none
+else:
+    st.error('Error: End date must be equal or greater then start date.')
 
 
 # department_selection = st.multiselect('SN:',
@@ -153,19 +197,6 @@ st.dataframe(df2)
 #     )
 #     st.write(fig)
 
-# bar_chart:
-# st.markdown("### Location Check")
-bar_chart = px.bar(df2,
-                   x='SN',
-                   y='LOCATION',
-                   text='LOCATION',
-                   color_discrete_sequence = ['#F63366']*len(df2),
-                   template= 'presentation',
-                   title="Location Check",
-                  )
-st.plotly_chart(bar_chart)
-#'ggplot2', 'seaborn', 'simple_white', 'plotly', 
-# 'plotly_white', 'plotly_dark', 'presentation', 'xgridoff','ygridoff', 'gridon', 'none
    
 
 
