@@ -74,10 +74,6 @@ ws_choice = st.sidebar.radio('Available worksheets',what_sheets)
 df = load_the_spreadsheet(ws_choice)
 
 
-
-
-
-
 # --- STREAMLIT SELECTION
 sn = df['SN'].unique().tolist()
 # ages = df['LOCATION'].unique().tolist()
@@ -93,9 +89,9 @@ max_date = dt.date(2024,1,1)
 a_date = st.date_input("Pick a date", (min_date, max_date))
 
 ##this uses streamlit 'magic'!!!!
-"The date selected:", a_date
+# "The date selected:", a_date
 # "The type", type(a_date)
-"Singling out a date for dataframe filtering", a_date[0],a_date[-1]
+# "Singling out a date for dataframe filtering", a_date[0],a_date[-1]
 
 st.dataframe(df)
 
@@ -110,19 +106,19 @@ print(df2)
 st.dataframe(df2)
 
 
-department_selection = st.multiselect('SN:',
-                                    sn,
-                                    default=sn)
+# department_selection = st.multiselect('SN:',
+#                                     sn,
+#                                     default=sn)
 
 # --- FILTER DATAFRAME BASED ON SELECTION
-mask = (df['SN'].isin(department_selection))
-number_of_result = df[mask].shape[0]
-st.markdown(f'*Available Results: {number_of_result}*')
+# mask = (df['SN'].isin(department_selection))
+# number_of_result = df[mask].shape[0]
+# st.markdown(f'*Available Results: {number_of_result}*')
 
 # --- GROUP DATAFRAME AFTER SELECTION
-df_grouped = df[mask].groupby(by=['SN']).count()[['LOCATION']]
+# df_grouped = df[mask].groupby(by=['SN']).count()[['LOCATION']]
 # df_grouped = df_grouped.rename(columns={'LOCATION': 'Time_stamp'})
-df_grouped = df_grouped.reset_index()
+# df_grouped = df_grouped.reset_index()
 
 
 
